@@ -17,6 +17,10 @@ public class ForgeEventHandler {
 
 	@SubscribeEvent
 	public void serverChat(ServerChatEvent event) {
+		if (event.player instanceof FakePlayer) {
+			return;
+		}
+		
 		if (DCConfig.enabled && !MiscUtils.isMessageFromDiscord(event.message)) {
 			DiscordThread.instance.sendMessageToAllChannels(MiscUtils.toDiscordMessage(event.username, event.message));
 		}
